@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: imsdev
+data:
+  MONGODB_URI: mongodb://mongodb:27017
+  

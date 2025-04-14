@@ -1,0 +1,18 @@
+services:
+  web: 
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ims
+    environment:
+      - MONGODB_URI=mongodb://mongodb:27017
+    ports:
+      - '5000:5000'
+    depends_on:
+      - mongodb
+  mongodb:
+    image: mongo
+    ports:
+      - '27017:27017'
+    volumes:
+      - ./data:/data/db
