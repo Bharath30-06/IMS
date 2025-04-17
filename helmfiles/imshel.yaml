@@ -30,7 +30,9 @@ metadata:
 spec:
   selector:
     app: {{ .Values.labels.app }}
+  type: {{ .Values.service.type }}
   ports:
   - port: {{ .Values.service.port }}
     targetPort: {{ .Values.service.port }}
+
 
