@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-mongodeployment
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.lables1.app1 }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.lables1.app1 }}
+    spec:
+      containers:
+      - name: mongo
+        image: {{ .Values.image1.registry1 }}:{{ .values.image1.tag1 }}
+        ports:
+        - containerPort: {{ .Values.service1.port1 }}
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-mongoservice
+spec:
+  selector:
+    app: {{ .Values.lables1.app1 }}
+  ports:
+  - port: {{ .Values.service1.port1 }}
+    targetPort: {{ .Values.service1.port1 }}
+
