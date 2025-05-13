@@ -16,7 +16,7 @@ spec:
       - name: ims
         image: {{ .Values.image.registary }}:{{ .Values.image.tag }}
         env:
-          name: {{ .Values.env.name }}
+       - name: {{ .Values.env.name }}
           value: {{ .Values.env.link | quote }}
         ports:
         - containerPort: {{ .Values.service.port }}
