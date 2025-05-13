@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
       - name: mongo
-        image: {{ .Values.image1.registry1 }}:{{ .values.image1.tag1 }}
+        image: {{ .Values.image1.registry1 }}:{{ .Values.image1.tag1 }}
         ports:
         - containerPort: {{ .Values.service1.port1 }}
 
@@ -25,7 +25,7 @@ metadata:
   name: {{ .Release.Name }}-mongoservice
 spec:
   selector:
-    app: {{ .Values.lables1.app1 }}
+    app: {{ .Values.labels1.app1 }}
   ports:
   - port: {{ .Values.service1.port1 }}
     targetPort: {{ .Values.service1.port1 }}
