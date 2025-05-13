@@ -33,31 +33,35 @@ ssh -i <your-key>.pem ec2-user@<ec2-public-ip>
 Install Required Tools
 Install Git:
 
-bash
-Copy
-Edit
-sudo yum install git -y
+
 Use the following script to install kubectl, aws-cli, and eksctl:
 
 
 #!/bin/bash
 
-set -e
+set -e  # Exit immediately if a command exits with a non-zero status
 
-# Update and install dependencies
-sudo apt-get update -y
-sudo apt-get install -y curl unzip
+# Update package lists
+apt-get update -y
+
+# Install dependencies
+apt-get install -y curl unzip
 
 # Install kubectl
 KUBECTL_VERSION="1.30.4"
 KUBECTL_DATE="2024-09-11"
-curl -O "https://s3.us-west-2.amazonaws.com/amazon-eks/${KUBECTL_VERSION}/${KUBECTL_DATE}/bin/linux/amd64/kubectl"
-curl -O "https://s3.us-west-2.amazonaws.com/amazon-eks/${KUBECTL_VERSION}/${KUBECTL_DATE}/bin/linux/amd64/kubectl.sha256"
+KUBECTL_URL="https://s3.us-west-2.amazonaws.com/amazon-eks/${KUBECTL_VERSION}/${KUBECTL_DATE}/bin/linux/amd64/kubectl"
+KUBECTL_SHA_URL="${KUBECTL_URL}.sha256"
+
+curl -O "$KUBECTL_URL"
+curl -O "$KUBECTL_SHA_URL"
 sha256sum -c kubectl.sha256
 chmod +x ./kubectl
 mkdir -p $HOME/bin && cp ./kubectl $HOME/bin/kubectl
+export PATH=$HOME/bin:$PATH
 echo 'export PATH=$HOME/bin:$PATH' >> ~/.bashrc
-source ~/.bashrc
+
+# Verify kubectl installation
 kubectl version --client
 
 # Install AWS CLI
@@ -69,7 +73,14 @@ rm -rf aws awscliv2.zip
 # Install eksctl
 curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
 sudo mv /tmp/eksctl /usr/local/bin
+
+# Verify eksctl installation
 eksctl version
+
+# Reload shell configuration
+source ~/.bashrc
+
+echo "Installation completed successfully."
 
 ### Step 6: Install Helm
 
