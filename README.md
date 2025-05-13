@@ -90,7 +90,7 @@ sudo snap install helm --classic
 eksctl create cluster --name test-cluster \
   --version 1.31 \
   --region us-west-2 \
-  --nodegroup-name murali-test-linux \
+  --nodegroup-name  test-linux \
   --node-type t2.medium \
   --nodes 2 \
   --nodes-min 2 \
