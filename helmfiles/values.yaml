@@ -6,7 +6,7 @@ image:
   tag: latest
 service:
   port: 5000
-  type: NodePort
+  type: LoadBalancer
 env:
   name: imsdev
   link: "mongodb://mongodb:27017"
