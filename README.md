@@ -85,6 +85,26 @@ echo "Installation completed successfully."
 ### Step 6: Install Helm
 
 sudo snap install helm --classic
+
+##### Configure the aws credintals and using that create clutse in aws
+eksctl create cluster --name test-cluster \
+  --version 1.31 \
+  --region us-west-2 \
+  --nodegroup-name murali-test-linux \
+  --node-type t2.medium \
+  --nodes 2 \
+  --nodes-min 2 \
+  --nodes-max 5 \
+  --managed
+
+--------------------------
+
+Delete :
+
+eksctl delete cluster --name test-cluster --region us-west-2
+
+kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml - Metric Server 
+
 ### Step 7: Clone Your Repository
 
 git clone <your-git-repo-url>
