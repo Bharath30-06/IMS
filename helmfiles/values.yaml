@@ -14,7 +14,7 @@ env:
 labels1:
   app1: mongo
 image1: 
-  registary1: mongo
+  registry1: mongo
   tag: latest
 service1:
   port1: 27017

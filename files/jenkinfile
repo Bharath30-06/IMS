@@ -1,0 +1,29 @@
+pipeline {
+    agent any
+
+    environment {
+        EC2_HOST = "ec2-13-200-246-215.ap-south-1.compute.amazonaws.com"
+        SSH_KEY = "shh.pem"
+        REMOTE_USER = "ec2-user" 
+        APP_DIR = "/home/ec2-user/app"
+        REPO_URL = "https://github.com/Naveen-wq/LoanApp.git"
+        BRANCH = "main"
+    }
+
+    stages {
+        stage('Deploy to EC2 via SSH') {
+            steps {
+                sh """
+                    ssh -o StrictHostKeyChecking=no -i $SSH_KEY $REMOTE_USER@$EC2_HOST << EOF
+                        sudo yum install -y git nodejs npm || sudo apt install -y git nodejs npm
+                        rm -rf $APP_DIR
+                        git clone -b $BRANCH $REPO_URL $APP_DIR
+                        cd $APP_DIR
+                        npm install
+                        nohup node app.js > output.log 2>&1 &
+                    EOF
+                """
+            }
+        }
+    }
+}
